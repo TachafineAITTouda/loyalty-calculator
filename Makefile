@@ -10,3 +10,5 @@ django-createsuperuser:
 django-migrate:
 	docker-compose exec web python manage.py makemigrations loyalty
 	docker-compose exec web python manage.py migrate
+django-fixtures:
+	docker-compose exec web python manage.py populate_data
