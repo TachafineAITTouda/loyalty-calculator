@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=100)
@@ -11,3 +12,11 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def calculate_loyalty_score(self):
+        return 0.0
+
+    def update_loyalty_score(self):
+        self.loyalty_score = self.calculate_loyalty_score()
+        self.score_last_calculated = timezone.now()
+        self.save()
