@@ -1,19 +1,6 @@
-# configuration environnement 
+*.pyc
+__pycache
+.DS_Store
 .env.dev
-devenv
-
-# Django 
-*.log
-.pot
-.pyc
-__pycache__
-migrations
-
-# Docker generated files/folder from config
-mysql
-
-# prod files
-staticfiles
-
-# Ne pas ignorer ces fichiers
-!.env.dev-exemple
+.env.prod
+.env.prod.db

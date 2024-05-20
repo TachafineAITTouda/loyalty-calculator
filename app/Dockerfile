@@ -1,29 +1,28 @@
-FROM python:3.10-slim-buster
+# pull official base image
+FROM python:3.11.4-slim-buster
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# set work directory
 WORKDIR /usr/src/app
 
+# set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update
-RUN apt-get install gcc default-libmysqlclient-dev -y
+# install system dependencies
+RUN apt-get update && apt-get install -y netcat
 
-RUN pip install -U pip setuptools wheel
+# install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install -r requirements.txt
 
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
+# copy project
 COPY . .
 
-RUN apt-get install dos2unix
-RUN dos2unix --newfile docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-RUN apt-get install netcat -y
-
-ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
