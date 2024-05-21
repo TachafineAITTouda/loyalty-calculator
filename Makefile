@@ -12,3 +12,7 @@ django-migrate:
 	docker-compose exec web python manage.py migrate
 django-fixtures:
 	docker-compose exec web python manage.py populate_data
+django-test:
+	docker-compose exec web python manage.py test
+django-calculate:
+	docker-compose exec web python manage.py update_loyalty_scores

@@ -1,34 +1,39 @@
-# Dockerizing Django with Postgres, Gunicorn, and Nginx
+# Loyalty Score Calculator 
 
-## Want to learn how to build this?
+This project is designed to calculate and manage loyalty scores for customers based on their purchases, reviews, and engagement activities. The project uses Django and Docker for development and deployment.
 
-Check out the [tutorial](https://testdriven.io/dockerizing-django-with-postgres-gunicorn-and-nginx).
+## Prerequisites
 
-## Want to use this project?
+- Docker
+- Docker Compose
 
-### Development
+## Getting Started
 
-Uses the default Django development server.
+### Setting Up the Environment
 
-1. Rename *.env.dev-sample* to *.env.dev*.
-1. Update the environment variables in the *docker-compose.yml* and *.env.dev* files.
-1. Build the images and run the containers:
+1. **Copy the environment file**:
+if you are in linux you can use make command to make things more easier 
+```sh
+make up
+``` 
+or 
+```sh
+cp -f .env.dev-sample .env.dev
+docker-compose up
+```
 
-    ```sh
-    $ docker-compose up -d --build
-    ```
+### Running the Application
+To run the application, you can use the following commands:
 
-    Test it out at [http://localhost:8000](http://localhost:8000). The "app" folder is mounted into the container and your code changes apply automatically.
+## Makefile Commands
 
-### Production
-
-Uses gunicorn + nginx.
-
-1. Rename *.env.prod-sample* to *.env.prod* and *.env.prod.db-sample* to *.env.prod.db*. Update the environment variables.
-1. Build the images and run the containers:
-
-    ```sh
-    $ docker-compose -f docker-compose.prod.yml up -d --build
-    ```
-
-    Test it out at [http://localhost:1337](http://localhost:1337). No mounted folders. To apply changes, the image must be re-built.
+| Command                 | Description                                         |
+|-------------------------|-----------------------------------------------------|
+| `make up`               | Copies `.env.dev-sample` to `.env.dev` and starts the Docker containers |
+| `make down`             | Brings down the Docker containers                   |
+| `make django-shell`     | Accesses the Django shell within the Docker container |
+| `make django-createsuperuser` | Creates a Django superuser                     |
+| `make django-migrate`   | Runs Django migrations                              |
+| `make django-fixtures`  | Populates the database with sample data             |
+| `make django-test`      | Runs Django tests                                   |
+| `make django-calculate` | Updates loyalty scores for all customers            |
