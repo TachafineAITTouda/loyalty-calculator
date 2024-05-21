@@ -16,12 +16,7 @@ class Customer(models.Model):
 
     def calculate_loyalty_score(self):
         calculator = ScoreCalculator(self)
-        self.loyalty_score = calculator.calculate_loyalty_score()
+        self.loyalty_score = round(calculator.calculate_score(), 2)
         self.score_last_calculated = timezone.now()
         self.save()
         return self.loyalty_score
-
-    def update_loyalty_score(self):
-        self.loyalty_score = self.calculate_loyalty_score()
-        self.score_last_calculated = timezone.now()
-        self.save()
